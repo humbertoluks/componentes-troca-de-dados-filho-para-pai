@@ -20,10 +20,24 @@
 <body class="bg-light">
   <div id="app">
     <div class="container mt-5">
-      <div class="mx-auto">
+      <div class="mx-auto" style="width: 400px">
+        <search-user @search="paiSearch"></search-user>
       </div>
     </div>
   </div>
+
+
+  <template id="searchUser">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="input-group">
+          <input v-model="user" type="text" class="form-control" placeholder="Nome do usuário">
+          <button class="btn btn-outline-secondary" type="button" @click="search">Pesquisar</button>
+        </div>
+      </div>
+    </div>
+  </template>
+
 
   <!-- Script do JavaScript do VueJS -->
   <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
@@ -33,7 +47,30 @@
         return {
         }
       },
+
+      methods: {
+        paiSearch(user) {
+          console.log('pai search', user)
+        }
+      }
     });
+
+    app.component('search-user', {
+      data() {
+        return {
+          user: '',
+        }
+      },
+
+      template: '#searchUser',
+
+      methods: {
+        search() {
+          console.log('pesquisando usuário')
+          this.$emit('search', this.user)
+        }
+      }
+    })
 
     // Monta a aplicação
     app.mount("#app");
